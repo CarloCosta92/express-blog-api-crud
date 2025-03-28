@@ -1,11 +1,17 @@
-//Come prima cosa, creiamo un controller per i nostri post, in una cartella controllers.
+const posts= require("../data/posts.js")
 
 const index = (req, res) => {
-    res.send('Lista dei post');
+    res.json(posts);
+    // res.send('Lista dei post');
 };
 
 const show = (req, res) => {
-    res.send('Dettagli di un post');
+
+    const postId = parseInt(req.params.id);
+    const post = posts.find(post => post.id === postId);
+
+    // res.send('Dettagli di un post');
+    res.status(200).json(post);
 };
 
 const store = (req, res) => {
