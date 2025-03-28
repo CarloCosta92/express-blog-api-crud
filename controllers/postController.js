@@ -23,7 +23,15 @@ const update = (req, res) => {
 };
 
 const destroy = (req, res) => {
-    res.send('Eliminazione di un post');
+
+    const postId = parseInt(req.params.id);
+    const post = posts.findIndex(post => post.id === postId);
+
+    posts.splice(post, 1);
+
+    console.log(posts)
+
+    res.send(posts);
 };
 
 module.exports = {
