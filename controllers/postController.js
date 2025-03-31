@@ -1,7 +1,25 @@
 const posts= require("../data/posts.js")
 
 const index = (req, res) => {
-    res.json(posts);
+    const check=req.query.tag;
+
+    if (check){
+        // Filtra i post per tag
+    const checkedPosts = posts.filter((post) =>
+        post.tags.some((tag) => tag === check)
+      );
+      if (checkedPosts.length === 0) {
+        return res.status(404).json({
+          error: "not Found",
+          messaggio: "Nessun post trovato ",
+        });
+      }
+  
+      res.json(checkedPosts); //stampa quelli trovati
+    
+    } else {
+        res.json(posts); //stampa tutto
+    }
     // res.send('Lista dei post');
 };
 
