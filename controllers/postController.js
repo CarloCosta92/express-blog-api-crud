@@ -31,7 +31,7 @@ const destroy = (req, res) => {
 
     console.log(posts)
 
-    res.send(posts);
+    res.status(204).send(posts);
 };
 
 module.exports = {
