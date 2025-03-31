@@ -40,7 +40,32 @@ const store = (req, res) => {
 };
 
 const update = (req, res) => {
-    res.send('Modifica di un post');
+
+    //recuperiamo id dall'url
+    const id=parseInt(req.params.id);
+
+    //cerchiamo l'elemento
+    const recipe= posts.find(recipe => recipe.id === id);
+
+    //controllo che ci sia effettivamente
+    if(!recipe){
+        return res.status(404).json({
+            error: "not found",
+            messaggio: "ricetta non trovata"
+        })
+    }
+
+    //aggiorniamo il ricettario
+    recipe.title=req.body.title;
+    recipe.content=req.body.content;
+    recipe.image=req.body.image;
+    recipe.tags=req.body.tags;
+
+    console.log(posts)
+
+    res.json(recipe);
+
+    // res.send('Modifica di un post');
 };
 
 const destroy = (req, res) => {
