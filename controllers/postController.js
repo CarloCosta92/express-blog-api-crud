@@ -7,11 +7,21 @@ const index = (req, res) => {
 
 const show = (req, res) => {
 
+    // validazione
+    if (req.params.id) {
+
     const postId = parseInt(req.params.id);
     const post = posts.find(post => post.id === postId);
 
+    if (!post) {
+        return res.status(404).json({ 
+            error: "not found",
+            messaggio: "ricetta non trovata" });
+      }
+
     // res.send('Dettagli di un post');
     res.status(200).json(post);
+}
 };
 
 const store = (req, res) => {
@@ -47,13 +57,13 @@ const update = (req, res) => {
     //cerchiamo l'elemento
     const recipe= posts.find(recipe => recipe.id === id);
 
-    //controllo che ci sia effettivamente
+    //validazione
     if(!recipe){
         return res.status(404).json({
             error: "not found",
             messaggio: "ricetta non trovata"
         })
-    }
+    } else {
 
     //aggiorniamo il ricettario
     recipe.title=req.body.title;
@@ -65,6 +75,8 @@ const update = (req, res) => {
 
     res.json(recipe);
 
+    }
+
     // res.send('Modifica di un post');
 };
 
@@ -72,6 +84,14 @@ const destroy = (req, res) => {
 
     const postId = parseInt(req.params.id);
     const post = posts.findIndex(post => post.id === postId);
+
+    //validazione
+    if (post === -1) {
+        return res.status(404).json({
+          error: "Not Found",
+          messaggio: "Post non trovato.",
+        });
+      }
 
     posts.splice(post, 1);
 
