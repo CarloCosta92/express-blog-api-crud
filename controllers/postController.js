@@ -15,7 +15,28 @@ const show = (req, res) => {
 };
 
 const store = (req, res) => {
-    res.send('Creazione di un nuovo post');
+    console.log(req.body);
+
+    //variabile per nuovo id sequenziale
+    const newId= posts[posts.length-1].id + 1;
+
+    // creazione oggetto
+    const newRecipe={
+        id: newId,
+        title: req.body.title,
+        content: req.body.content,
+        image: req.body.image,
+        tags: req.body.tags
+    }
+
+    // push nuova ricetta nel DB
+    posts.push(newRecipe);
+
+    console.log(posts);
+
+    res.status(201).json(newRecipe);
+
+    // res.send('Creazione di un nuovo post');
 };
 
 const update = (req, res) => {
